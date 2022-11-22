@@ -4,7 +4,8 @@ import setStyleElementText from './setStyleElementText'
 
 function appendStyleElement(
   css: string | string[],
-  attributes?: Record<string, any>
+  attributes?: Record<string, any>,
+  injectFirst?: boolean
 ) {
   if (Array.isArray(css)) css = css.join("\n");
   const id: string | undefined = attributes?.["id"];
@@ -18,8 +19,13 @@ function appendStyleElement(
     if (prevElement) prevElement.remove();
     const element = createStyleElement(css, attributes);
     registerStyleElementUsage(element);
-    const firstStyleElement = head.querySelector('style')
-    head.insertBefore(element, firstStyleElement)
+
+    if (injectFirst) {
+      head.insertBefore(element, head.firstChild);
+    } else {
+      head.appendChild(element);
+    }
+
     return element;
   }
 }

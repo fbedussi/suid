@@ -52,10 +52,14 @@ function createStyle(value: () => StyleProps | undefined) {
       if (styleElement) {
         registerStyleElementUsage(styleElement);
       } else {
-        styleElement = appendStyleElement(styleObject.rules, {
-          id: styleObject.id,
-          nonce: context.cache?.nonce,
-        });
+        styleElement = appendStyleElement(
+          styleObject.rules,
+          {
+            id: styleObject.id,
+            nonce: context.cache?.nonce,
+          },
+          context.injectFirst,
+        );
       }
     }
 

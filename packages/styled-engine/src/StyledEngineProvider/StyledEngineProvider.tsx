@@ -5,10 +5,11 @@ import { JSXElement } from "solid-js";
 
 export default function StyledEngineProvider(inProps: {
   children: JSXElement;
-  value?: StyledEngineContextValue;
+  value?: Omit<StyledEngineContextValue, 'injectFirst'>;
+  injectFirst?: boolean
 }) {
   return (
-    <StyledEngineContext.Provider value={inProps.value || {}}>
+    <StyledEngineContext.Provider value={Object.assign(inProps.value || {}, { injectFirst: inProps.injectFirst })}>
       {inProps.children}
     </StyledEngineContext.Provider>
   );
